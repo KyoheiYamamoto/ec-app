@@ -9,11 +9,11 @@ const Auth = ({children}) => {
 
     const isSignedIn = getSignedIn(selector);
 
-    useEffect( () => {
-        if (!isSignedIn) {
-            dispatch(listenAuthState())
-        }
-    }, []);
+    useEffect(() => {
+      if (!isSignedIn) {
+        dispatch(listenAuthState());
+      }
+    }, [dispatch, isSignedIn]);
 
     if (!isSignedIn) {
         return <></>
