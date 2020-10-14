@@ -8,9 +8,7 @@ export const listenAuthState = () => {
       if (user) {
         const uid = user.uid;
 
-        db.collection('users')
-          .doc(uid)
-          .get()
+        db.collection('users').doc(uid).get()
           .then((snapshot) => {
             const data = snapshot.data();
             dispatch(
@@ -19,11 +17,8 @@ export const listenAuthState = () => {
                 role: data.role,
                 uid: uid,
                 username: data.username,
-              })
-            );
-
-            dispatch(push('/'));
-          });
+              }))
+          })
       } else {
         dispatch(push('/signin'));
       }
@@ -40,12 +35,10 @@ export const resetPassword = (email) => {
     } else
     {
       auth.sendPasswordResetEmail(email)
-        .then(() =>
-        {
+        .then(() => {
           alert('入力されたアドレスはパスワードのリセット用のメールに送りました。')
           dispatch(push ('/signin'))
-        }).catch(() =>
-        {
+        }).catch(() =>{
          alert('パスワードリセットに失敗しました。')
        })
     }
