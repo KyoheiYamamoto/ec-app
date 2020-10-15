@@ -11,8 +11,7 @@ export const listenAuthState = () => {
         db.collection('users').doc(uid).get()
           .then((snapshot) => {
             const data = snapshot.data();
-            dispatch(
-              signInAction({
+            dispatch(signInAction({
                 isSignedIn: true,
                 role: data.role,
                 uid: uid,
