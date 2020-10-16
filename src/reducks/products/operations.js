@@ -49,14 +49,11 @@ export const saveProduct = (id, name, description, category, gender, price, imag
       data.id = id;
     }
 
-    return productsRef
-      .doc(id)
-      .set(data, { merge: true })
+    return productsRef.doc(id).set(data, { merge: true })
       .then(() => {
         dispatch(push('/'));
-      })
-      .catch((error) => {
-        throw new Error(error);
+      }).catch((error) => {
+        throw new Error(error)
       });
   };
 };

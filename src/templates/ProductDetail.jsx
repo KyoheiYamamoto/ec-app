@@ -55,13 +55,13 @@ const ProductDetail = () => {
 
   const [product, setProduct] = useState(null);
 
-  useEffect(() =>{
-    db.collection('products').doc(id).get()
-      .then(doc =>{
-        const data = doc.data();
-        setProduct(data)
-     })
-  }, [id]);
+  useEffect(() => {
+        db.collection('products').doc(id).get().then(doc => {
+            const data = doc.data()
+            setProduct(data)
+        })
+    },[])
+
   return (
     <section className="c-section-wrapin">
       {product && (
