@@ -1,7 +1,7 @@
 import React ,{useEffect }from 'react';
 import { ProductCard } from "../components/Products";
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts } from "../reducks/products/operation";
+import { fetchProducts } from "../reducks/products/operations";
 import { getProducts } from "../reducks/products/selectors";
 
 const ProductList = () =>{
@@ -18,7 +18,10 @@ const ProductList = () =>{
       <div className="p-grid__row">
         {products.length > 0 && (
           products.map(product => (
-            <ProductCard key={product.id} />
+            <ProductCard
+                key={product.id} id={product.id} images={product.images}
+                price={product.price} name={product.name}
+            />
           ))
         )}
       </div>
