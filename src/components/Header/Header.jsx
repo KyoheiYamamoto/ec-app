@@ -5,7 +5,7 @@ import Toolbar                        from '@material-ui/core/Toolbar';
 import {useDispatch, useSelector}     from "react-redux";
 import {getSignedIn}                  from "../../reducks/users/selectors";
 import logo                           from "../../assets/img/icons/logo.png";
-import {HeaderMenu, ClosableDrawer}   from "./index";
+import {HeaderMenus, ClosableDrawer}   from "./index";
 import {push}                         from "connected-react-router"
 
 const useStyles = makeStyles(() =>
@@ -50,7 +50,7 @@ const Header = () =>{
           <img src={logo} alt="Torahack Logo" width="128px" onClick={() => dispatch(push('/'))} />
           {isSignedIn && (
             <div className={classes.iconButtons}>
-              <HeaderMenu handleDrawerToggle={handleDrawerToggle }/>
+              <HeaderMenus handleDrawerToggle={handleDrawerToggle }/>
             </div>
           )}
         </Toolbar>
