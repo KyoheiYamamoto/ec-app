@@ -34,24 +34,30 @@ const Header = () =>{
   const isSignedIn = getSignedIn(selector)
   const dispatch = useDispatch();
 
-  return (
+  const [sideBarOpen, setSideBarOpen] = useState(false);
 
+  const handleDrawerToggle = useCallback((event,isOpen) => {
+     if (event.type === 'keydown' && (event.key === 'Tab' || event.key ==='Shift')){
+       return;
+     }
+     setSideBarOpen(isOpen);
+  },[sideBarOpen]);
+
+  return (
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.menuBar}>
         <Toolbar className={classes.toolBar}>
-          <img src={logo} alt="Torahack Logo" width="128px"
-            onClick={ () => dispatch(push('/') )}
-          />
+          <img src={logo} alt="Torahack Logo" width="128px" onClick={() => dispatch(push('/'))} />
           {isSignedIn && (
             <div className={classes.iconButtons}>
-             <HeaderMenu />
+              <HeaderMenu handleDrawerToggle={handleDrawerToggle }/>
             </div>
           )}
         </Toolbar>
-
       </AppBar>
+      <ClosableDrawer open={sideBarOpen} onClose={handleDrawerToggle} />
     </div>
-  )
+  );
 
 };
 export default Header
