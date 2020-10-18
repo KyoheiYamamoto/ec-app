@@ -1,6 +1,23 @@
-import { signInAction, signOutAction } from './actions';
+import { signInAction, signOutAction, fetchProductsInCartAction } from './actions';
 import { push } from 'connected-react-router';
 import { auth, db, FirebaseTimestamp } from '../../firebase/index';
+
+export const addProductToCart = (addProduct) => {
+  return async (dispatch, getState) => {
+    const uid = getState().users.uid;
+    const cartRef = db.collection('users').doc(uid).collection('cart').doc();
+    addProduct['cartId'] = cartRef.id;
+    await cartRef.set(addProduct);
+    dispatch(push('/'))
+  }
+};
+
+export const fetchProductsInCart = (products) => {
+  return async (dispatch) => {
+    dispatch(fetchProductsInCartAction(products));
+  };
+};
+
 
 export const listenAuthState = () => {
   return async (dispatch) => {
@@ -16,7 +33,8 @@ export const listenAuthState = () => {
                 role: data.role,
                 uid: uid,
                 username: data.username,
-              }))
+              })
+            );
           })
       } else {
         dispatch(push('/signin'));
