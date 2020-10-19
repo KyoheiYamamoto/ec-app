@@ -8,8 +8,8 @@ export const addProductToCart = (addProduct) => {
     const cartRef = db.collection('users').doc(uid).collection('cart').doc();
     addProduct['cartId'] = cartRef.id;
     await cartRef.set(addProduct);
-    dispatch(push('/'))
-  }
+    dispatch(push('/'));
+  };
 };
 
 export const fetchProductsInCart = (products) => {
@@ -18,24 +18,26 @@ export const fetchProductsInCart = (products) => {
   };
 };
 
-
 export const listenAuthState = () => {
   return async (dispatch) => {
     return auth.onAuthStateChanged((user) => {
       if (user) {
         const uid = user.uid;
 
-        db.collection('users').doc(uid).get()
+        db.collection('users')
+          .doc(uid)
+          .get()
           .then((snapshot) => {
             const data = snapshot.data();
-            dispatch(signInAction({
+            dispatch(
+              signInAction({
                 isSignedIn: true,
                 role: data.role,
                 uid: uid,
                 username: data.username,
               })
             );
-          })
+          });
       } else {
         dispatch(push('/signin'));
       }
@@ -45,21 +47,21 @@ export const listenAuthState = () => {
 
 export const resetPassword = (email) => {
   return async (dispatch) => {
-    if (email === "")
-    {
+    if (email === '') {
       alert('必須項目は未入力です');
       return false;
-    } else
-    {
-      auth.sendPasswordResetEmail(email)
+    } else {
+      auth
+        .sendPasswordResetEmail(email)
         .then(() => {
-          alert('入力されたアドレスはパスワードのリセット用のメールに送りました。')
-          dispatch(push ('/signin'))
-        }).catch(() =>{
-         alert('パスワードリセットに失敗しました。')
-       })
+          alert('入力されたアドレスはパスワードのリセット用のメールに送りました。');
+          dispatch(push('/signin'));
+        })
+        .catch(() => {
+          alert('パスワードリセットに失敗しました。');
+        });
     }
-  }
+  };
 };
 
 export const signIn = (email, password) => {

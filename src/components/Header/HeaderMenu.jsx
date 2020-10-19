@@ -1,26 +1,29 @@
 import React, { useEffect } from 'react';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
-import ShoppingCarIcon from '@material-ui/icons/ShoppingCart';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import MenuIcon from '@material-ui/icons/Menu';
-import { getProductsInCart, getUserId } from '../../reducks/users/selectors';
-import { useSelector, useDispatch } from 'react-redux';
-import { db } from '../../firebase/index';
+import { Badge } from '@material-ui/core';
 import { fetchProductsInCart } from '../../reducks/users/operations';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProductsInCart, getUserId } from '../../reducks/users/selectors';
 import { push } from 'connected-react-router';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import { db } from '../../firebase/index';
+import MenuIcon from '@material-ui/icons/Menu';
 
 const HeaderMenu = (props) => {
-  const selector = useSelector((state) => state);
-  let productsInCart = getProductsInCart(selector);
-  const uid = getUserId(selector);
   const dispatch = useDispatch();
+  const selector = useSelector((state) => state);
+  const userId = getUserId(selector);
+  let productsInCart = getProductsInCart(selector);
 
-  useEffect(() =>{
-    const unsubscribe = db.collection('users').doc(uid).collection('cart')
-
-      .onSnapshot(snapshots =>{
-        snapshots.docChanges().forEach(change =>{
+  // Listen products in user's cart
+  useEffect(() => {
+    const unsubscribe = db
+      .collection('users')
+      .doc(userId)
+      .collection('cart')
+      .onSnapshot((snapshots) => {
+        snapshots.docChanges().forEach((change) => {
           const product = change.doc.data();
           const changeType = change.type;
 
@@ -38,27 +41,34 @@ const HeaderMenu = (props) => {
             default:
               break;
           }
-        })
+        });
+
         dispatch(fetchProductsInCart(productsInCart));
-     })
-   return () => unsubscribe()
-  }, [])
+      });
+
+    return () => unsubscribe();
+  }, []);
 
   return (
     <>
       <IconButton onClick={() => dispatch(push('/cart'))}>
         <Badge badgeContent={productsInCart.length} color="secondary">
-          <ShoppingCarIcon />
+          <ShoppingCartIcon />
         </Badge>
       </IconButton>
       <IconButton>
         <FavoriteBorderIcon />
       </IconButton>
-      <IconButton onClick={(event) => props.handleDrawerToggle(event, true)}>
+      <IconButton
+        aria-label="Menu Items"
+        aria-controls="menu-appbar"
+        aria-haspopup="true"
+        onClick={(e) => props.handleDrawerToggle(e, true)}
+        color="inherit"
+      >
         <MenuIcon />
       </IconButton>
     </>
   );
 };
-
 export default HeaderMenu;
