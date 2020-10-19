@@ -10,7 +10,7 @@ import { db } from '../../firebase/index';
 import { fetchProductsInCart } from '../../reducks/users/operations';
 import { push } from 'connected-react-router';
 
-const HeaderMenus = (props) => {
+const HeaderMenu = (props) => {
   const selector = useSelector((state) => state);
   let productsInCart = getProductsInCart(selector);
   const uid = getUserId(selector);
@@ -29,11 +29,11 @@ const HeaderMenus = (props) => {
               productsInCart.push(product);
               break;
             case 'modified':
-              const index = productsInCart.findIndex(product => product.cardId === change.doc.id);
+              const index = productsInCart.findIndex((product) => product.cartId === change.doc.id);
               productsInCart[index] = product;
               break;
             case 'removed':
-              productsInCart = productsInCart.filter((product) => product.cardId !== change.doc.id);
+              productsInCart = productsInCart.filter((product) => product.cartId !== change.doc.id);
               break;
             default:
               break;
@@ -61,4 +61,4 @@ const HeaderMenus = (props) => {
   );
 };
 
-export default HeaderMenus;
+export default HeaderMenu;
