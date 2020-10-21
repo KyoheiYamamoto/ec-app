@@ -45,7 +45,7 @@ const OrderConfirm = () => {
 
   const order = useCallback( () => {
     dispatch(orderProduct(productsInCart, total));
-  }, [productsInCart]);
+  }, [dispatch.productsInCart]);
 
   return (
     <section className="c-section-wrapin">
