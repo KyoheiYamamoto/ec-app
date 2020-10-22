@@ -15,11 +15,12 @@ const ProductEdit = () => {
   }
 
   const [name, setName] = useState(''),
-    [description, setDescription] = useState(""),
+    [description, setDescription] = useState(''),
     [images, setImages] = useState([]),
-    [category, setCategory] = useState(""),
-    [gender, setGender] = useState(""),
-    [price, setPrice] = useState(""),
+    [category, setCategory] = useState(''),
+    [categories, setCategories] = useState([]),
+    [gender, setGender] = useState(''),
+    [price, setPrice] = useState(''),
     [sizes, setSizes] = useState([]);
 
   const inputName = useCallback(
@@ -43,11 +44,7 @@ const ProductEdit = () => {
     [setPrice]
   );
 
-  const categories = [
-    { id: 'tops', name: 'トップス' },
-    { id: 'shirts', name: 'シャツ' },
-    { id: 'pants', name: 'パンツ' },
-  ];
+
   const genders = [
     { id: 'all', name: '全て' },
     { id: 'male', name: 'メンズ' },
@@ -70,6 +67,23 @@ const ProductEdit = () => {
         });
     }
   }, [id]);
+
+  useEffect(() => {
+    db.collection('categories')
+      .orderBy('order', 'asc')
+      .get()
+      .then((snapshots) => {
+        const list = [];
+        snapshots.forEach((snapshot) => {
+          const data = snapshot.data()
+          list.push({
+            id: data.id,
+            name:data.name
+          });
+        });
+        setCategories(list);
+      });
+  }, []);
 
   return (
     <section>
