@@ -23,8 +23,12 @@ const TextDetail = (props) => {
 
   return (
     <div className={classes.row}>
-      <div className={classes.label}>{props.label}</div>
-      <div className={classes.value}>{props.value}</div>
+      <div className={classes.label}>
+        {props.label}
+      </div>
+      <div className={classes.value}>
+        {props.value}
+      </div>
     </div>
   );
 };

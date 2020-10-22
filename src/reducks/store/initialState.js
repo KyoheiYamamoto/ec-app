@@ -1,14 +1,15 @@
 const initialState = {
-  products:{
-      list:[]
+  products: {
+    list: [],
   },
   users: {
     cart: [],
     isSignedIn: false,
-    role:"",
-    uid: "",
-    username: ""
-  }
+    orders: [],
+    role: '',
+    uid: '',
+    username: '',
+  },
 };
 
 export default initialState

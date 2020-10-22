@@ -45,7 +45,7 @@ const OrderConfirm = () => {
 
   const order = useCallback( () => {
     dispatch(orderProduct(productsInCart, total));
-  }, [productsInCart]);
+  }, [dispatch.productsInCart,total]);
 
   return (
     <section className="c-section-wrapin">
@@ -54,7 +54,7 @@ const OrderConfirm = () => {
         <div className={classes.detailBox}>
           <List>
             {productsInCart.length > 0 &&
-              productsInCart.map((product) => (
+              productsInCart.map(product => (
                 <CartListItem product={product} key={product.cartId} />
               ))}
           </List>
