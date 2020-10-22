@@ -30,8 +30,6 @@ const OrderedProducts = (props) => {
   const dispatch = useDispatch();
   const products = props.products;
 
-
-
   const goToProductDetail = useCallback( (id) => {
     dispatch(push('/product/' + id));
   }, [dispatch]);

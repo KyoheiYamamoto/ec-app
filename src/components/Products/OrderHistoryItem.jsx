@@ -22,22 +22,21 @@ const OrderHistoryItem = (props) => {
   const order = props.order;
   const orderedDatetime = datetimeToString(order.updated_at.toDate());
   const shippingDate = dateToString(order.shipping_date.toDate());
-  const price = '¥' + order.amount.toLocaleString();
+  const totalPrice = '¥' + order.amount.toLocaleString();
+  const products = props.order.products;
 
   // console.log(order.products);
 
   return (
     <div>
-        <div className="module-spacer--small" />
-        <TextDetail label={'注文ID'} value={props.order.id} />
-        <TextDetail label={'注文日時'} value={orderedDatetime} />
-        <TextDetail label={'発送予定日'} value={shippingDate} />
-        <TextDetail label={'注文金額'} value={price} />
-        {order.products.length > 1 &&(
-          <OrderedProducts products={order.products} />
-        )}
-        <div className="module-spacer--extra-extra-small" />
-        <Divider />
+      <div className="module-spacer--small" />
+      <TextDetail label={'注文ID'} value={props.order.id} />
+      <TextDetail label={'注文日時'} value={orderedDatetime} />
+      <TextDetail label={'発送予定日'} value={shippingDate} />
+      <TextDetail label={'注文金額'} value={totalPrice} />
+      {Object.keys(products).length > 0 && <OrderedProducts products={products} />}
+      <div className="module-spacer--extra-extra-small" />
+      <Divider />
     </div>
   );
 };
