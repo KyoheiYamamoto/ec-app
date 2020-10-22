@@ -23,36 +23,48 @@ const useStyles = makeStyles((theme) => ({
   text: {
     width: '100%',
   },
-}));
-const OrderedProducts = (props) => {
+}))
 
+const OrderedProducts = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const products = props.products;
 
-  const goToProductPage = useCallback((id) => {
+
+
+  const goToProductDetail = useCallback( (id) => {
     dispatch(push('/product/' + id));
-  }, []);
+  }, [dispatch]);
 
   return (
     <List>
-      {products.map((product) => (
+      {products.map(product => (
         <>
           <ListItem className={classes.list} key={product.id}>
             <ListItemAvatar>
-              <img classes={classes.image} src={product.images[0].path} alt={'Ordered Product'} />
+            <img
+              className={classes.image} src={product.images[0].path} alt={"Orderd Product"}
+            />
             </ListItemAvatar>
             <div className={classes.text}>
-              <ListItemText primary={product.name} secondary={'サイズ' + product.size} />
-              <ListItemText primary={'¥' + product.price.toLocaleString()} />
+              <ListItemText
+                primary={product.name}
+                secondary={"サイズ" + product.size} />
+              <ListItemText
+                primary={"¥"+product.price.toLocaleString()}
+                />
             </div>
-            <PrimaryButton label={'商品詳細を見る'} onClick={() => goToProductPage(product.id)} />
+            <PrimaryButton
+              label={"商品詳細をみる"}
+              onClick={() =>goToProductDetail(product.id) }
+            />
           </ListItem>
-          <Divider />
+          <Divider/>
         </>
+
       ))}
     </List>
-  );
+  )
 }
 
-export default OrderedProducts
+export default OrderedProducts;

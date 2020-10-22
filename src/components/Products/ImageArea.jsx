@@ -3,7 +3,6 @@ import IconButton from '@material-ui/core/IconButton';
 import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
 import { makeStyles } from '@material-ui/styles';
 import { storage } from '../../firebase/index';
-// import { Image } from '@material-ui/icons';
 import ImagePreview from './ImagePreview';
 // import { useDispatch } from 'react-redux';
 
@@ -18,8 +17,7 @@ const useStyles = makeStyles({
 
 const ImageArea = (props) => {
    const classes = useStyles();
-  //  const dispatch = useDispatch();
-  //  const images = props.images;
+
 
   const deleteImage = useCallback(
     async (id) => {
@@ -32,7 +30,7 @@ const ImageArea = (props) => {
         return storage.ref('images').child(id).delete();
       }
     },
-    [props,props.images]
+    [props.images]
   );
   const uploadImage = useCallback((event) => {
       const file = event.target.files;

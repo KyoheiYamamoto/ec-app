@@ -1,8 +1,8 @@
 export const FETCH_ORDERS_HISTORY = 'FETCH_ORDERS_HISTORY';
-export const fetchOrdersHistoryAction = (orders) => {
+export const fetchOrdersHistoryAction = (history) => {
   return {
     type: 'FETCH_ORDERS_HISTORY',
-    payload: orders,
+    payload: history,
   };
 };
 export const FETCH_PRODUCTS_IN_CART = 'FETCH_PRODUCTS_IN_CART';

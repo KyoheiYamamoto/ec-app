@@ -19,6 +19,6 @@ const Router = () => {
         <Route exact path="/order/history" component={OrderHistory} />
       </Auth>
     </Switch>
-  );
+  )
 };
 export default Router;
